@@ -1,0 +1,35 @@
+mongosh                                                                             Run mongoshell
+show dbs                                                                            show all exist databases
+db                                                                                  refer to current database
+use {{database_name}}                                                               create(if not there) and switched to database
+show collections                                                                    show all collections present in db
+//  Create
+db.{{collection_name}}.insertOne({key:val, key2:val2})                              create or insert a new document in {{collection_name}} as BSON in object form
+db.{{collection_name}}.insertMany([{key:val, key2:val2}, {key:val, key2:val2}])     create or insertMany documents in {{collection_name}} as BSON in array of object form
+//  Read
+db.{{collection_name}}.find()                                                       show collection_name documents
+db.{{collection_name}}.find({{query}}, {{projection}})                              show data according to query and projection
+db.collection.find({name:"mongoDb}, {name:1})                                       show documents with name = mongoDb and show only name with id
+db.collection.find({name:"mongoDb}, {name:1, _id:0})                                show documents with name = mongoDb and show only name
+db.collection.find({name:"mongoDb}, {name:1, _id:0}).limit({{count}})               show documents with name = mongoDb and show only name only limited to first count
+db.collection.findOne({name:"mongoDb}, {name:1, _id:0})                             show documents with name = mongoDb and show only name only first findOne
+db.collection.find({name:"mongoDb}).limit({{count}}).skip({{count2}})               show documents with name = mongoDb only limited to first count after skip count2 documents
+//  Update
+db.{{collection_name}}.updateOne({{filter}}, {{update}})                            update the first document accordingto filter
+db.{{collection_name}}.updateMany({{filter}}, {{update}})                           update all document accordingto filter
+db.{{collection_name}}.updateOne({name:"mongoDb", {$set: {type:"Full Stack"}}})     update the document named mongoDb with type = "Full Stack"
+db.{{collection_name}}.updateMany({name:"mongoDb", {$set: {type:"Full Stack"}}})    update all documents named mongoDb with type = "Full Stack"
+//  Delete
+db.{{collection_name}}.deleteMany({{filter}})                                       delete documents according to filter
+
+//  Query operators
+//  comparison operators
+$eq  $gt  $gte  $lt  $lte  $in  $ne  $nin
+db.{{collection_name}}.find({{{key}} : {$gt : {{value}}}})                          show all documents which key greater than value
+//  logical operators
+$and  $or  $nor  $not
+db.{{collection_name}}.find({$or : [{query1}, {query2}]})                           show all documents satisfying query1 or query2
+
+//  CountDocument & Sorting
+db.{{collection_name}}.find().countDocuments()                                      show number of documents
+db.{{collection_name}}.find().sort({name : x})                                      show documents sorted accordingto names if(x == 1)  ascending and if(x == -1) descending
